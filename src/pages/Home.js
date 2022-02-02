@@ -4,7 +4,7 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  Platform,TouchableOpacity,
+  Platform,TouchableOpacity, FlatList,
 } from "react-native";
 import Button from "../components/Button";
 import SkillCard from "../components/SkillCard";
@@ -16,7 +16,6 @@ export const Home = () => {
   const handleAddNewSkill = () => {
     setMySkill((old) => [...old, newSkill]);
   };
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>aijsnasjidnasd</Text>
@@ -28,11 +27,14 @@ export const Home = () => {
       />
       <Button onPress={handleAddNewSkill}/>
       <Text style={[styles.buttonText, { marginVertical: 40 }]}>My Skills</Text>
-      {
-        mySkill.map((skill, key) => {return (
-          <SkillCard key={key} skill={skill}/>
-        )})
-      }
+
+      <FlatList
+        data={mySkill}
+        keyExtractor={(item, key) => key}
+        renderItem={({item}) => (
+          <SkillCard skill={item}/>
+        )}
+      />
     </View>
   );
 };
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "#121015",
     paddingHorizontal: 30,
-    paddingVertical: 70,
+    paddingVertical: 70, 
   },
   title: {
     color: "#fff",
@@ -57,5 +59,10 @@ const styles = StyleSheet.create({
     padding: Platform.OS === "ios" ? 15 : 10,
     marginTop: 50,
     borderRadius: 7,
+  },
+  buttonText: {
+    color: "#FFF",
+    fontSize: 17,
+    fontWeight: "bold",
   },
 });
